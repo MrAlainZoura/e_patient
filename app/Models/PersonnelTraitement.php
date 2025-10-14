@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PersnnelTraitement extends Model
+class PersonnelTraitement extends Model
 {
     protected $fillable = [
-        "personnel_medical_id",
-        "traitetement_id"
+        "traitement_id",
+        "personnel_medical_id"
     ];
 
-     public function personnel(){
+    public function personnel(){
         return $this->belongsTo(PersonnelMedical::class);
     }
-     public function traitement(){
+    public function traitement(){
         return $this->belongsTo(Traitement::class);
     }
 }

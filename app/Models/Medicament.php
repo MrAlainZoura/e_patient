@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Traitement extends Model
+class Medicament extends Model
 {
-    protected $fillable = [
-        "patient_id",
+    protected $fillable =[
         "libelle",
-        "date_debut",
-        "date_fin"
+        "tranche_age",
+        "posologie"
     ];
+
     public function medicamentTraitement(){
         return $this->hasMany(MedicamentTraitement::class);
-    }
-    public function patient(){
-        return $this->belongsTo(Patient::class);
     }
 }
