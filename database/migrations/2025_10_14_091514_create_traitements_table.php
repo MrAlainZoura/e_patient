@@ -18,8 +18,8 @@ return new class extends Migration
                 ->noActionOnDelete()
                 ->cascadeOnUpdate();
             $table->string('libelle');
-            $table->dateTime('date_debut');
-            $table->dateTime('date_fin');
+            $table->dateTime('date_debut')->nullable();
+            $table->dateTime('date_fin')->nullable();
             $table->timestamps();
         });
     }

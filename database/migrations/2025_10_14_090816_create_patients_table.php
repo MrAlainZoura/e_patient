@@ -18,11 +18,11 @@ return new class extends Migration
                 ->noActionOnDelete()
                 ->cascadeOnUpdate();
             $table->string('nom_complet');
-            $table->string('genre');
-            $table->string('code');
-            $table->dateTime('date_naissance');
-            $table->string('adresse');
-            $table->string('telephone');
+            $table->string('genre')->nullable();
+            $table->string('code')->nullable();
+            $table->dateTime('date_naissance')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('telephone')->nullable();
             $table->timestamps();
         });
     }

@@ -16,4 +16,14 @@ class PersonnelMedical extends Model
         "matricule",
         "telephone"
     ];
+
+     public function personnelTraitement(){
+        return $this->hasMany(PersonnelTraitement::class);
+    }
+     public function consultationn(){
+        return $this->hasMany(Consultation::class);
+    }
+     public function examen(){
+        return $this->hasMany(ExamenMedical::class);
+    }
 }

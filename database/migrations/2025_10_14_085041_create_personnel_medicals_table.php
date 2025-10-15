@@ -18,12 +18,12 @@ return new class extends Migration
                 ->noActionOnDelete()
                 ->cascadeOnUpdate();
             $table->string('nom_complet');
-            $table->string('genre');
-            $table->string('fonction');
-            $table->string('specialition');
-            $table->string('grade');
-            $table->string('matricule');
-            $table->string('telephone');
+            $table->string('genre')->nullable();
+            $table->string('fonction')->nullable();
+            $table->string('specialition')->nullable();
+            $table->string('grade')->nullable();
+            $table->string('matricule')->nullable();
+            $table->string('telephone')->nullable();
             $table->timestamps();
         });
     }

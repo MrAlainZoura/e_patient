@@ -15,4 +15,14 @@ class Patient extends Model
         "telephone",
         "code"
     ];
+
+     public function consultationn(){
+        return $this->hasMany(Consultation::class);
+    }
+     public function examen(){
+        return $this->hasMany(ExamenMedical::class);
+    } 
+     public function traitement(){
+        return $this->hasMany(Traitement::class);
+    } 
 }

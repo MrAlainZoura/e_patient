@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('persnnel_traitements', function (Blueprint $table) {
+        Schema::create('examen_medicals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('patient_id')
+                ->constrained()
+                ->noActionOnDelete()
+                ->cascadeOnUpdate();
             $table->foreignId('personnel_medical_id')
                 ->constrained()
                 ->noActionOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignId('traitetement_id')
-                ->constrained()
-                ->noActionOnDelete()
-                ->cascadeOnUpdate();
+            $table->string('libelle');
+            $table->string('type')->nullable();
+            $table->string('echantillon')->nullable();
+            $table->string('resultat')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('persnnel_traitements');
+        Schema::dropIfExists('examen_medicals');
     }
 };

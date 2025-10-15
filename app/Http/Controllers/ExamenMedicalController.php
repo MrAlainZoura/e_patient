@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PersnnelTraitement;
+use App\Models\ExamenMedical;
 use Illuminate\Http\Request;
 
-class PersnnelTraitementController extends Controller
+class ExamenMedicalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PersnnelTraitementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PersnnelTraitement $persnnelTraitement)
+    public function show(ExamenMedical $examenMedical)
     {
         //
     }
@@ -42,7 +42,7 @@ class PersnnelTraitementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PersnnelTraitement $persnnelTraitement)
+    public function edit(ExamenMedical $examenMedical)
     {
         //
     }
@@ -50,7 +50,7 @@ class PersnnelTraitementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PersnnelTraitement $persnnelTraitement)
+    public function update(Request $request, ExamenMedical $examenMedical)
     {
         //
     }
@@ -58,7 +58,7 @@ class PersnnelTraitementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PersnnelTraitement $persnnelTraitement)
+    public function destroy(ExamenMedical $examenMedical)
     {
         //
     }

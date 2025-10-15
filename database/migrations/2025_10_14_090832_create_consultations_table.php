@@ -22,7 +22,7 @@ return new class extends Migration
                 ->noActionOnDelete()
                 ->cascadeOnUpdate();
             $table->dateTime('date_rdv');
-            $table->longText('observationn');
+            $table->longText('observationn')->nullable();
             $table->timestamps();
         });
     }
