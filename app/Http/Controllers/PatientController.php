@@ -7,59 +7,61 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Afficher tous les patients
     public function index()
     {
-        //
+        $patients = Patient::all();
+        return response()->json($patients);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    //Créer un nouveau patient
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|integer',
+            'nom_complet' => 'required|string|max:255',
+            'genre' => 'required|string',
+            'date_naissance' => 'required|date',
+            'adresse' => 'required|string',
+            'telephone' => 'required|string',
+            'code' => 'required|string|unique:patients,code',
+        ]);
+
+        $patient = Patient::create($validated);
+        return response()->json($patient, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Patient $patient)
+    // Afficher un patient spécifique
+    public function show($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        return response()->json($patient);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Patient $patient)
+    // Mettre à jour un patient
+    public function update(Request $request, $id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+
+        $validated = $request->validate([
+            'user_id' => 'sometimes|integer',
+            'nom_complet' => 'sometimes|string|max:255',
+            'genre' => 'sometimes|string',
+            'date_naissance' => 'sometimes|date',
+            'adresse' => 'sometimes|string',
+            'telephone' => 'sometimes|string',
+            'code' => 'sometimes|string|unique:patients,code,' . $id,
+        ]);
+
+        $patient->update($validated);
+        return response()->json($patient);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Patient $patient)
+    // Supprimer un patient
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Patient $patient)
-    {
-        //
+        $patient = Patient::findOrFail($id);
+        $patient->delete();
+        return response()->json(['message' => 'Patient supprimé avec succès']);
     }
 }

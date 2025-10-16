@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 class AuthController extends Controller
@@ -34,25 +31,7 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        $validateDate = Validator::make($request->all(),
-        [
-            'name'=>'required',
-            'email'=>'required|email|max:255|unique:users',
-            'password'=>'required',
-        ]);
-
-        if($validateDate->fails()){
-            return response()->json(['success'=>false, 'data'=>$validateDate->errors()]);
-        }
-        return response()->json(['success'=>true, 'data'=>"user"]);
-        $data = [
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-        ];
-
-        // $user = User::create($data);
-        return response()->json(['success'=>true, 'data'=>"user"]);
+        //
     }
 
     /**
@@ -88,16 +67,42 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{
-    $creat = $this->store($request);
-    return response()->json(['token' => $creat]);
-    $credentials = $request->only('email', 'password');
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required'],
+        ]);
 
-    if (!$token = Auth::attempt($credentials)) {
-        return response()->json(['error' => 'Unauthorizedklkkl'], 401);
+        if (!$token = Auth::guard('api')->attempt($credentials)) {
+            return response()->json([
+                'message' => 'Email ou mot de passe incorrect'
+            ], 401);
+        }
+
+        $user = Auth::guard('api')->user();
+
+        return response()->json([
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+        ]);
+
+    }
+    public function me()
+    {
+        $user = auth('api')->user();
+        $data = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'roles' => $user->getRoleNames(),
+            'permissions' => $user->getAllPermissions()->pluck('name'),
+            'is_admin' => $user->hasRole('admin'),
+            'can_edit' => $user->can('update')
+        ];
+        return response()->json(["success"=>true, "data"=>$data]);
     }
 
-    return response()->json(['token' => $token]);
-}
 
 }
